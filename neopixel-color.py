@@ -2,11 +2,11 @@
 
 import time
 import board
-import busio
 import os
 import sys
-import neopixel_spi as neopixel
 
+# Set the appropriate neopixel count for your pixel strip
+NUM_PIXELS = 1
 
 # Get configuration from the environment, or set a default value if not there
 def get_from_env(v, d):
@@ -42,20 +42,20 @@ except:
 # Create the color 3-tuple from the converted values
 color = (red, green, blue)
 
-# Set the appropriate neopixel count for your pixel strip
-NUM_PIXELS = 1
-
+# Different libraries for Raspberry Pi and NVIDIA Jetson
 if ARCH == 'arm64':
-  # Assume this is an NVIDIA Jetson device, with SPI0 enabled
-  # The NeoPixel control wire must be attached to Jetson GPIO pin 19 (SPI0 MOSI)
+  # NVIDIA Jetson device with SPI0 enabled and with the Neopixel control wire
+  # attached to Jetson GPIO pin 19 (SPI0 MOSI)
+  import busio
+  import neopixel_spi as neopixel
   spi = board.SPI()
   PIXEL_ORDER = neopixel.RGB
   pixels = neopixel.NeoPixel_SPI(spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False)
-
-elif ARCH == 'arm32':
-  # Assume this is a Raspberry Pi
-  pass
-
+elif ARCH == 'arm':
+  # Raspberry Pi with NeoPixel control wire attached to Pi GPIO board.D18
+  import neopixel
+  RASPBERRY_PI_GPIO = board.D18
+  pixels = neopixel.NeoPixel(RASPBERRY_PI_GPIO, NUM_PIXELS)
 else:
   print("%s: unsupported architecture: \"%s\"" % (sys.argv[0], ARCH))
   sys.exit(1)
