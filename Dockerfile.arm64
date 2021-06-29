@@ -1,6 +1,7 @@
 # Container that displays pretty patterns on NeoPixel strings on Jetsons.
 #
 # Tested on NVIDIA Jetson nano 2GB. Expected to work on other Jetsons.
+# Connect the NeoPixel control wire to board pin #19.
 
 # For SPI, you need to (on the *host*:
 # sudo mkdir -p /boot/dtb

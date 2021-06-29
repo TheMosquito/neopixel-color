@@ -51,9 +51,10 @@ push:
 
 publish-service:
 	@ARCH=$(ARCH) \
+	NEOPIXEL_COLOR=$(or ${NEOPIXEL_COLOR},'#0000ff') \
         SERVICE_NAME="$(SERVICE_NAME)" \
         SERVICE_VERSION="$(SERVICE_VERSION)"\
-        SERVICE_CONTAINER="$(DOCKERHUB_ID)/$(SERVICE_NAME):$(SERVICE_VERSION)" \
+        SERVICE_CONTAINER="$(DOCKERHUB_ID)/$(SERVICE_NAME)_$(ARCH):$(SERVICE_VERSION)" \
         hzn exchange service publish -O $(CONTAINER_CREDS) -f service.json --pull-image
 
 publish-pattern:
@@ -67,7 +68,7 @@ stop:
 	@docker rm -f ${SERVICE_NAME} >/dev/null 2>&1 || :
 
 clean:
-	@docker rmi -f $(DOCKERHUB_ID)/$(SERVICE_NAME):$(SERVICE_VERSION) >/dev/null 2>&1 || :
+	@docker rmi -f $(DOCKERHUB_ID)/$(SERVICE_NAME)_$(ARCH):$(SERVICE_VERSION) >/dev/null 2>&1 || :
 
 agent-run:
 	hzn register --pattern "${HZN_ORG_ID}/$(PATTERN_NAME)"
