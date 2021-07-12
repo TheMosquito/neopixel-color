@@ -49,7 +49,7 @@ if ARCH == 'arm64':
   import busio
   import neopixel_spi as neopixel
   spi = board.SPI()
-  PIXEL_ORDER = neopixel.RGB
+  PIXEL_ORDER = neopixel.GRB
   pixels = neopixel.NeoPixel_SPI(spi, NUM_PIXELS, pixel_order=PIXEL_ORDER, auto_write=False)
 elif ARCH == 'arm':
   # Raspberry Pi with NeoPixel control wire attached to Pi GPIO board.D18
