@@ -9,12 +9,6 @@
   "requiredServices": [],
   "userInput": [
     {
-      "name": "ARCH",
-      "label": "The Open Horizon hardware archiecture.",
-      "type": "string",
-      "defaultValue": "$ARCH"
-    },
-    {
       "name": "NEOPIXEL_COLOR",
       "label": "Color for the neopixel in hex RGB, e.g., #FF00FF is purple.",
       "type": "string",

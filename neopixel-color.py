@@ -14,7 +14,11 @@ def get_from_env(v, d):
     return os.environ[v]
   else:
     return d
-ARCH = get_from_env('ARCH', '')
+HZN_ARCH = get_from_env('HZN_ARCH', '')
+ARCH = get_from_env('ARCH', HZN_ARCH)
+if ARCH == '':
+  print("%s: ARCH or HZN_ARCH must be set in the environment." % (sys.argv[0]))
+  sys.exit(1)
 NEOPIXEL_COLOR = get_from_env('NEOPIXEL_COLOR', '#0000FF')
 SECONDS_ON = get_from_env('SECONDS_ON', '3.5')
 SECONDS_OFF = get_from_env('SECONDS_OFF', '0.25')
