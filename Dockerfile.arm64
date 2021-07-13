@@ -40,5 +40,6 @@ RUN pip3 install adafruit-circuitpython-neopixel-spi
 COPY neopixel-color.py /
 
 # Run the daemon
-CMD python3 /neopixel-color.py
+CMD [ "/usr/bin/python3", "neopixel-color.py" ]
+
 

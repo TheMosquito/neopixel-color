@@ -65,6 +65,7 @@ publish-pattern:
 	hzn exchange pattern publish -f pattern.json
 
 stop:
+	@docker kill --signal=SIGTERM ${SERVICE_NAME} >/dev/null 2>&1 || :
 	@docker rm -f ${SERVICE_NAME} >/dev/null 2>&1 || :
 
 clean:

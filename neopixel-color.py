@@ -3,6 +3,7 @@
 import time
 import board
 import os
+import signal
 import sys
 
 # Set the appropriate neopixel count for your pixel strip
@@ -64,12 +65,28 @@ else:
   print("%s: unsupported architecture: \"%s\"" % (sys.argv[0], ARCH))
   sys.exit(1)
 
-# Loop forever displaying the color, then turning the neopixel off
-while True:
-  pixels[0] = color
+keep_on_swimming = True
+def signal_handler(self, *args):
+  print("%s: SIGNAL!" % (sys.argv[0]))
+  sys.stdout.flush()
+  for i in range(NUM_PIXELS):
+    pixels[i] = (0, 0, 0)
+  pixels.show()
+  global keep_on_swimming
+  keep_on_swimming = False
+  sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
+# Loop displaying the color, then turning the neopixel off
+while keep_on_swimming:
+  for i in range(NUM_PIXELS):
+    pixels[i] = color
   pixels.show()
   time.sleep(seconds_on)
-  pixels[0] = (0, 0, 0)
+  for i in range(NUM_PIXELS):
+    pixels[i] = (0, 0, 0)
   pixels.show()
   time.sleep(seconds_off)
 
